@@ -23,7 +23,7 @@ from froala_editor import views
 
 urlpatterns = [
     path('' , include('catalog.urls')),
-    # path('api/' , include('catalog.urls_api')),
+    path('api/' , include('catalog.urls_api')),
     
     path('admin/', admin.site.urls),
     # path('froala_editor/',include('froala_editor.urls'))
