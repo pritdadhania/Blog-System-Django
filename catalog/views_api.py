@@ -14,12 +14,12 @@ class LoginView(APIView):
             data = request.data
 
             if data.get('username') is None:
-               responce['message'] = 'key username not found'
-               raise Exception('key username not found')
+                responce['message'] = 'key username not found'
+                raise Exception('key username not found')
             
             if data.get('password') is None:
-               responce['message'] = 'key password not found'
-               raise Exception('key password not found')  
+                responce['message'] = 'key password not found'
+                raise Exception('key password not found')  
 
 
             check_user =User.objects.filter(username = data.get('username')).first()
@@ -29,8 +29,8 @@ class LoginView(APIView):
                 raise Exception('invalid username not found')  
 
             user_obj= authenticate(username = data.get('username'), password = data.get('password'))
-           
             if user_obj:
+                login(request, user_obj)
                 responce['status'] = 200
                 responce['message'] = 'Welcome'           
             else:
@@ -55,12 +55,12 @@ class RegisterView(APIView):
             data = request.data
 
             if data.get('username') is None:
-               responce['message'] = 'key username not found'
-               raise Exception('key username not found')
+                responce['message'] = 'key username not found'
+                raise Exception('key username not found')
             
             if data.get('password') is None:
-               responce['message'] = 'key password not found'
-               raise Exception('key password not found')  
+                responce['message'] = 'key password not found'
+                raise Exception('key password not found')  
 
 
             check_user =User.objects.filter(username = data.get('username')).first()
