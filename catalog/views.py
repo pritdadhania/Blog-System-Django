@@ -3,7 +3,11 @@ from django.shortcuts import render, redirect
 # Create your views here.
 
 from .form import *
+from django.contrib.auth import logout
 
+def logout_view(request):
+    logout(request)
+    return redirect('/')
 
 def home(request):
     context = {'blogs': BlogModel.objects.all()}
@@ -65,7 +69,6 @@ def blog_delete(request , id):
         blog_obj = BlogModel.objects.get(id=id)
         if blog_obj.user == request.user:
             blog_obj.delete()
-
     except Exception as e :
         print(e)
     return redirect('/see-blog/')
@@ -93,3 +96,15 @@ def add_thing(request):
 
 
     return render(request, 'add_thing.html',context)    
+
+def verify(request,token):
+    try:
+        profile_obj = Profile.objects.filter(token=token).first()
+
+        if profile_obj:
+            profile_obj.is_verified = True
+            profile_obj.save()
+        return redirect('/login/')
+    except Exception as e :
+        print(e)
+    return redirect('/')
